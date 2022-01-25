@@ -43,9 +43,9 @@ router.use(function(req,res,next){
   res.setHeader('Access-Control-Allow-Credentials', true); // If needed
   next();
 });
-router.get('/', pageController.index)
-router.get('/forgot',pageController.forgot)
-router.get('/reset',pageController.reset)
+router.get('/',authMiddleware.isLoggedAll, pageController.index)
+router.get('/forgot',authMiddleware.isLoggedAll,pageController.forgot)
+router.get('/reset',authMiddleware.isLoggedAll,pageController.reset)
 router.get('/logout',pageController.logout)
 router.post('/login',passport.authenticate('local', { failureRedirect: '/?message=loginFail' }),authController.passport);
 router.post('/forgot_pw', authController.forgot )

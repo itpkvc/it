@@ -14,7 +14,7 @@ const Theme = require('../models/themeModel');
 const multer = require("multer");
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, "./public/upload");
+      cb(null, process.env.Path_upload);
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + file.originalname);

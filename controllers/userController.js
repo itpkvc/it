@@ -87,8 +87,8 @@ exports.insertUser = async(req,res,next) =>{
   
     var image,password;
     if(req.file === undefined){
-        if(gender == 'ชาย'){image = 'man.png'};
-        if(gender == 'หญิง'){image = 'female.png'}
+        if(gender == 'ชาย'){image = 'man.jpg'};
+        if(gender == 'หญิง'){image = 'female.jpg'}
     }else{
         image = req.file.filename
     }
@@ -186,11 +186,15 @@ exports.editImage = (req,res,next)=>{
 exports.editInfo = async(req,res,next)=>{
   //console.log(req.body)  
   //console.log(req.query)
-  if(req.body.gender == "หญิง"){
-    await User.findByIdAndUpdate({_id:req.query.id},{image : "female.png"})
-  }
-  if(req.body.gender == "ชาย"){
-    await User.findByIdAndUpdate({_id:req.query.id},{image : "man.png"})
+  var user = await User.findOne({_id:req.query.id});
+  console.log(user)
+  if(user.image == "female.jpg" || user.image == "man.jpg" ){
+    if(req.body.gender == "หญิง"){
+        await User.findByIdAndUpdate({_id:req.query.id},{image : "female.jpg"})
+      }
+      if(req.body.gender == "ชาย"){
+        await User.findByIdAndUpdate({_id:req.query.id},{image : "man.jpg"})
+      }
   }
   await User.findByIdAndUpdate({_id:req.query.id},req.body,(err,data)=>{
       if(err){return res.status(500).send(err);}
